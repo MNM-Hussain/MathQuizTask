@@ -42,7 +42,9 @@ public class MainDivision extends AppCompatActivity {
             btn_answer3.setEnabled(false);
             //to view the total Score of the user once the game over through a dialog box
             scoreAlert(Integer.toString(gamediv.getScore()) + " points");
-            tv_bottommessage.setText("Time is Up!!! " + gamediv.getNumberCorrect() + "/" + (gamediv.getTotalQuestions() - 1));
+            tv_bottommessage.setText("Score Is " + gamediv.getNumberCorrect() + "/" + (gamediv.getTotalQuestions() - 1));
+            //re-assigning the value for seconds Remaining
+            SecondsRemaining = 9;
         }
     };
 
@@ -63,11 +65,11 @@ public class MainDivision extends AppCompatActivity {
         prog_timer = findViewById(R.id.prog_timer);
 
         //setting initial text for each of the textviews
-        tv_timer.setText("0 sec");
-        tv_questions.setText("");
-        tv_bottommessage.setText("Press Go");
+//        tv_timer.setText("0 sec");
+//        tv_questions.setText("");
+//        tv_bottommessage.setText("Press Go");
         tv_score.setText("0");
-        prog_timer.setProgress(0);
+//        prog_timer.setProgress(0);
 
         nextTurn();
         timer.start();
@@ -129,6 +131,13 @@ public class MainDivision extends AppCompatActivity {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         dialogInterface.dismiss();
+                        //once the continue is clicked from dialog box again timer is restarts
+                        timer.start();
+                        //again enabling the answer buttons
+                        btn_answer0.setEnabled(true);
+                        btn_answer1.setEnabled(true);
+                        btn_answer2.setEnabled(true);
+                        btn_answer3.setEnabled(true);
                     }
                 }).create();
         alertDialog.show();
