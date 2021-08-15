@@ -11,9 +11,9 @@ public class AdditionQuestion {
     private int [] answerArray; //to store the 4 answers to user to be pick from
     //which of the 4 position is correct(0 or 1 or 2 or 3)
     private int answerPosition; //number from 0-3
-    //max value of first Number or SecondNumber
+    //max value of first Number or SecondNumber ex number from 0-10
     private int upperLimit;
-    //String output of the problem ex:- "6+5 ="
+    //String output of the problem ex:- "6+5 =" (question Display format)
     private String questionPhrase;
 
 
@@ -22,7 +22,7 @@ public class AdditionQuestion {
     public AdditionQuestion(int upperLimit){
         this.upperLimit = upperLimit;
         Random randomNumberMaker = new Random();
-
+        //nextInt() is used to input an integer value from the user and assign it to the variable
         this.firstNumber = randomNumberMaker.nextInt(upperLimit);
         this.secondNumber = randomNumberMaker.nextInt(upperLimit);
         this.answer = this.firstNumber + this.secondNumber;
@@ -31,9 +31,10 @@ public class AdditionQuestion {
 
         // we have 4 option for generate an answer, so we generating 1 of the 4 to be answer
         this.answerPosition = randomNumberMaker.nextInt(4);
+        // just initializing just for an array of random numbers
         this.answerArray =  new int[]{0,1,2,3};
 
-        //re-calc those answers
+        //re-calc those answers and providing the values for answers
         this.answerArray[0]= answer + 1;
         this.answerArray[1]= answer + 3;
         this.answerArray[2] = answer - 2;
@@ -53,7 +54,7 @@ public class AdditionQuestion {
         //for loop to run backward
         for (int i= array.length - 1; i>0; i--){
             //to take random position and swap with temperory numbers
-            index = randomNumberGenerator.nextInt(i + 1);
+            index = randomNumberGenerator.nextInt(i + 1);//nextInt() is used to input an integer value from the user and assign it to the variable
             temp = array[index];
             array[index]= array[i];
             array[i] = temp;

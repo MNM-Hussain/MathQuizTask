@@ -9,4 +9,5 @@
     <string name="SUBSTRACTION">SUBSTRACTION</string>
     <string name="MULTIPLICATION">MULTIPLICATION</string>
     <string name="DIVISION">DIVISION</string>
+    <string name="Score_view_Box">Your Total Score</string>
 </resources>

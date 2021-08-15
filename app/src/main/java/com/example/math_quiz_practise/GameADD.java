@@ -1,15 +1,15 @@
 package com.example.math_quiz_practise;
-
 import java.util.ArrayList;
 import java.util.List;
 
 public class GameADD {
-
+    //to have list of questions
     private List<AdditionQuestion> questions;
     private int numberCorrect;
     private int numberIncorrect;
     private int totalQuestions;
     private int score;
+    // to track the current question is displayed
     private AdditionQuestion currentQuestion;
 
     //constructor
@@ -18,15 +18,17 @@ public class GameADD {
         numberIncorrect=0;
         totalQuestions=0;
         score=0;
+        //setting a current question(i.e a new question and setted a range of 10)
         currentQuestion = new AdditionQuestion(10);
         questions = new ArrayList<AdditionQuestion>();
     }
 
-    //create a function
+    //create a function/method
     public void makeNewQuestion(){
         //generate a new question and assigning to current question
         currentQuestion = new AdditionQuestion(totalQuestions * 2 + 5); //increases the difficulty level
         totalQuestions++;
+        //adding the current question for the questions list
         questions.add(currentQuestion);
     }
     //checking whether the submitted answer is correct or wrong

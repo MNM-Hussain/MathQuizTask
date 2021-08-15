@@ -1,6 +1,9 @@
 package com.example.math_quiz_practise;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.Handler;
@@ -12,33 +15,34 @@ import android.widget.Toast;
 
 public class MainAddition extends AppCompatActivity {
 
-    Button btn_start, btn_answer0, btn_answer1, btn_answer2, btn_answer3;
+    Button btn_answer0, btn_answer1, btn_answer2, btn_answer3,btn_Score;
     TextView tv_score, tv_questions, tv_timer, tv_bottommessage;
     ProgressBar prog_timer;
 
     //importing the GameADD Class
     GameADD gameadd = new GameADD();
 
-    int SecondsRemaining = 60;
+    int SecondsRemaining = 9;
 
     //setting COuntdownTimer object to set remaining time
-    CountDownTimer timer = new CountDownTimer(60000,1000) {
+    CountDownTimer timer = new CountDownTimer(10000,1000) {
         @Override
         //method to run  after one seconds
         public void onTick(long l) {
             SecondsRemaining--;
             tv_timer.setText(Integer.toString(SecondsRemaining) + " Sec");
-            prog_timer.setProgress(60 - SecondsRemaining);
+            prog_timer.setProgress(10 - SecondsRemaining);
         }
 
         @Override
-        //method to be run after every 60 seconds
+        //method to be run after every 10 seconds
         public void onFinish() {
             btn_answer0.setEnabled(false);
             btn_answer1.setEnabled(false);
             btn_answer2.setEnabled(false);
             btn_answer3.setEnabled(false);
-            //to view the total Score of the user once the game over
+//            //to view the total Score of the user once the game over through a dialog box
+            scoreAlert(Integer.toString(gameadd.getScore()) + " points");
             tv_bottommessage.setText("Time is Up!!! " + gameadd.getNumberCorrect() + "/" + (gameadd.getTotalQuestions() - 1));
         }
     };
@@ -47,13 +51,11 @@ public class MainAddition extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
         //btn_start = findViewById(R.id.btn_start);
         btn_answer0 = findViewById(R.id.btn_answer0);
         btn_answer1 = findViewById(R.id.btn_answer1);
         btn_answer2 = findViewById(R.id.btn_answer2);
         btn_answer3 = findViewById(R.id.btn_answer3);
-
         tv_score = findViewById(R.id.tv_score);
         tv_bottommessage = findViewById(R.id.tv_bottommessage);
         tv_questions = findViewById(R.id.questions);
@@ -67,8 +69,11 @@ public class MainAddition extends AppCompatActivity {
         tv_score.setText("0");
         prog_timer.setProgress(0);
 
+        //calling the methods
         nextTurn();
+        //starting the timer
         timer.start();
+        //used and shared one onclicklistener to answers button
         View.OnClickListener answerButtonClickListener = new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -81,7 +86,6 @@ public class MainAddition extends AppCompatActivity {
                 tv_score.setText(Integer.toString(gameadd.getScore())); //to update the scores
                 //to move on with next set of questions, nextTurn method called here
                 nextTurn();
-
             }
         };
 
@@ -115,6 +119,19 @@ public class MainAddition extends AppCompatActivity {
 
         //setting bottom message
         tv_bottommessage.setText(gameadd.getNumberCorrect() +  "/" + (gameadd.getTotalQuestions() - 1)); //-1 because totalQuestions value comes when question appear
+    }
 
+    //Once the timeout the total score will be displayed through a dialog box as a popup
+    private void scoreAlert(String message){
+        AlertDialog alertDialog = new AlertDialog.Builder(MainAddition.this)
+                .setTitle("Your Score is ")
+                .setMessage(message)
+                .setPositiveButton("continue", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        dialogInterface.dismiss();
+                    }
+                }).create();
+        alertDialog.show();
     }
 }

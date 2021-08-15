@@ -1,5 +1,6 @@
 package com.example.math_quiz_practise;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.view.View;
@@ -7,6 +8,7 @@ import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 public class MainDivision extends AppCompatActivity {
@@ -19,26 +21,27 @@ public class MainDivision extends AppCompatActivity {
     //importing the GameADD Class
     GameDiv gamediv = new GameDiv();
 
-    int SecondsRemaining = 60;
+    int SecondsRemaining = 9;
 
     //setting COuntdownTimer object to set remaining time
-    CountDownTimer timer = new CountDownTimer(60000, 1000) {
+    CountDownTimer timer = new CountDownTimer(10000, 1000) {
         @Override
         //method to run  after one seconds
         public void onTick(long l) {
             SecondsRemaining--;
             tv_timer.setText(Integer.toString(SecondsRemaining) + " Sec");
-            prog_timer.setProgress(60 - SecondsRemaining);
+            prog_timer.setProgress(10 - SecondsRemaining);
         }
 
         @Override
-        //method to be run after every 60 seconds
+        //method to be run after every 10 seconds
         public void onFinish() {
             btn_answer0.setEnabled(false);
             btn_answer1.setEnabled(false);
             btn_answer2.setEnabled(false);
             btn_answer3.setEnabled(false);
-            //to view the total Score of the user once the game over
+            //to view the total Score of the user once the game over through a dialog box
+            scoreAlert(Integer.toString(gamediv.getScore()) + " points");
             tv_bottommessage.setText("Time is Up!!! " + gamediv.getNumberCorrect() + "/" + (gamediv.getTotalQuestions() - 1));
         }
     };
@@ -117,4 +120,18 @@ public class MainDivision extends AppCompatActivity {
         tv_bottommessage.setText(gamediv.getNumberCorrect() + "/" + (gamediv.getTotalQuestions() - 1)); //-1 because totalQuestions value comes when question appear
 
     }
+    //Once the timeout the total score will be displayed through a dialog box as a popup
+    private void scoreAlert(String message){
+        AlertDialog alertDialog = new AlertDialog.Builder(MainDivision.this)
+                .setTitle("Your Score is ")
+                .setMessage(message)
+                .setPositiveButton("continue", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        dialogInterface.dismiss();
+                    }
+                }).create();
+        alertDialog.show();
+    }
+
 }
